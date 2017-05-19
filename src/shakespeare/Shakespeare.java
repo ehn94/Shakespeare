@@ -15,12 +15,16 @@ import java.util.logging.Logger;
  * @author ehn19
  */
 public class Shakespeare {
-
+    String[] words = null;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+    
+        
         Shakespeare shake = new Shakespeare();
+        shake.words = shake.fileReader();
+        /*
         SortingAlgorithms selectionS = new SortingAlgorithms(shake.fileReader());// Selection
         SortingAlgorithms insertionS = new SortingAlgorithms(shake.fileReader());// Insertion
         SortingAlgorithms mergeS = new SortingAlgorithms(shake.fileReader());// Merge
@@ -48,17 +52,38 @@ public class Shakespeare {
         System.out.println("Merge sort: ");
         System.out.println(mergeS.arrToString());
         System.out.println("Merge sort took: " + elapsed3);
+        */
+        //----------------------------------------------------------------------
+        
+        ArraySymbolTable ast = new ArraySymbolTable();
+       
+        int i = 0;
+        for (String text : shake.words) {
+            Integer oldCount = ast.get(text);
+            int count = oldCount == null ? 1 : oldCount.intValue() + 1;
+            ast.put(text, count);
+            
+            i++;
+        }
+        for(int k = 0; k < ast.size(); k++)
+        {
+            System.out.println();
+        }
+        System.out.println(i);
+        
+        
+        
     }
 
     public String[] fileReader() {
-        String[] words = null;
+        
         try {
             words = FileUtility.toStringArray("C:\\Users\\ehn19\\Documents\\Skole\\4. semester\\Algoritmer og Datastrukturer\\Shakespeare.txt", "[^A-Za-z]");
 
         } catch (IOException ex) {
             ex.toString();
         }
-        String[] sArr = new String[100000];// Nyt String array med begrænset plads
+        String[] sArr = new String[100];// Nyt String array med begrænset plads
 
         for (int i = 0; i < sArr.length; i++)// Lægger de første 10000 ord fra Shakespeare ind i det nye array
         {
